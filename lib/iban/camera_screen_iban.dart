@@ -17,7 +17,8 @@ class _CameraScreenIbanState extends State<CameraScreenIban> {
   void _initializeCamera() async {
     final CameraController cameraController = CameraController(
       cameras[0],
-      ResolutionPreset.high,
+      ResolutionPreset.max,
+      imageFormatGroup: ImageFormatGroup.yuv420,
     );
     _controller = cameraController;
 

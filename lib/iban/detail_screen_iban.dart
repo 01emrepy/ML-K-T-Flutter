@@ -83,9 +83,6 @@ class _DetailScreenIbanState extends State<DetailScreenIban> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Image Details"),
-      ),
       body: _imageSize != null
           ? Stack(
               children: [

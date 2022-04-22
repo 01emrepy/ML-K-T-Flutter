@@ -21,7 +21,6 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
 
   List<String>? _listEmailStrings;
 
-  // Fetching the image size from the image file
   Future<void> _getImageSize(File imageFile) async {
     final Completer<Size> completer = Completer<Size>();
 
@@ -41,23 +40,15 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
     });
   }
 
-  // To detect the email addresses present in an image
   void _recognizeEmails() async {
     _getImageSize(File(_imagePath));
-
-    // Creating an InputImage object using the image path
     final inputImage = InputImage.fromFilePath(_imagePath);
-    // Retrieving the RecognisedText from the InputImage
     final text = await _textDetector.processImage(inputImage);
-
-    // Pattern of RegExp for matching a general email address
     String pattern =
         r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$";
     RegExp regEx = RegExp(pattern);
 
     List<String> emailStrings = [];
-
-    // Finding and storing the text String(s) and the TextElement(s)
     for (TextBlock block in text.blocks) {
       for (TextLine line in block.lines) {
         print('text: ${line.text}');
@@ -78,7 +69,6 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
   @override
   void initState() {
     _imagePath = widget.imagePath;
-    // Initializing the text detector
     _textDetector = GoogleMlKit.vision.textDetector();
     _recognizeEmails();
     super.initState();
@@ -86,7 +76,6 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
 
   @override
   void dispose() {
-    // Disposing the text detector when not used anymore
     _textDetector.close();
     super.dispose();
   }
@@ -94,9 +83,6 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Image Details"),
-      ),
       body: _imageSize != null
           ? Stack(
               children: [
@@ -120,7 +106,7 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
                   alignment: Alignment.bottomCenter,
                   child: Card(
                     elevation: 8,
-                    color: Colors.white,
+                    color: Colors.yellow,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -130,7 +116,7 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
                           const Padding(
                             padding: EdgeInsets.only(bottom: 8.0),
                             child: Text(
-                              "Identified emails",
+                              "Identified Gmails",
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -168,8 +154,6 @@ class _DetailScreenGmailState extends State<DetailScreenGmail> {
   }
 }
 
-// Helps in painting the bounding boxes around the recognized
-// email addresses in the picture
 class TextDetectorPainter extends CustomPainter {
   TextDetectorPainter(this.absoluteImageSize, this.elements);
 

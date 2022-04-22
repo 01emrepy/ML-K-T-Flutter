@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/main.dart';
-
 import 'detail_screen_gmail.dart';
 
 class CameraScreenGmail extends StatefulWidget {
@@ -13,12 +12,11 @@ class CameraScreenGmail extends StatefulWidget {
 
 class _CameraScreenGmailState extends State<CameraScreenGmail> {
   late CameraController _controller;
-
-  // Initializes camera controller to preview on screen
   void _initializeCamera() async {
     final CameraController cameraController = CameraController(
       cameras[0],
-      ResolutionPreset.high,
+      ResolutionPreset.max,
+      imageFormatGroup: ImageFormatGroup.yuv420,
     );
     _controller = cameraController;
 
@@ -44,11 +42,8 @@ class _CameraScreenGmailState extends State<CameraScreenGmail> {
     }
 
     try {
-      // Turning off the camera flash
       _controller.setFlashMode(FlashMode.off);
-      // Returns the image in cross-platform file abstraction
       final XFile file = await _controller.takePicture();
-      // Retrieving the path
       imagePath = file.path;
     } on CameraException catch (e) {
       print("Camera Exception: $e");
@@ -66,8 +61,6 @@ class _CameraScreenGmailState extends State<CameraScreenGmail> {
 
   @override
   void dispose() {
-    // dispose the camera controller when navigated
-    // to a different page
     _controller.dispose();
     super.dispose();
   }

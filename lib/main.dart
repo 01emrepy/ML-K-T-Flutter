@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'home_screen.dart';
 
-// Global variable for storing the list of cameras available
 List<CameraDescription> cameras = [];
 
 Future<void> main() async {
-  // Fetch the available cameras before initializing the app.
   try {
     WidgetsFlutterBinding.ensureInitialized();
     cameras = await availableCameras();
